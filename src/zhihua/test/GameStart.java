@@ -21,6 +21,12 @@ public class GameStart {
 		
 		frame.setVisible(true);
 		
+		frame.addKeyListener(controller);
+		panel.addKeyListener(controller);
+		blocks.addBlockListener(controller);
+		
+		blocks.start();
+		
 //		for (int i = 0; i <22; i++) {
 //			blocks.move();
 //			controller.blockMoved();
