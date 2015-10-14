@@ -8,9 +8,11 @@ import javax.swing.JPanel;
 public class Panel extends JPanel {
 	
 	private Blocks blocks;
+	private Bottom bottom;
 	
-	public void display(Blocks blocks){
-		this.blocks = blocks;		
+	public void display(Blocks blocks,Bottom bottom){
+		this.blocks = blocks;
+		this.bottom = bottom;
 		this.repaint();
 		System.out.println("display panel");
 	}
@@ -20,7 +22,10 @@ public class Panel extends JPanel {
 		g.fillRect(0, 0, 11*25, 21*25);		
 		
 		if(blocks != null){
-			this.blocks.drawMe(g);
+			this.blocks.drawMe(g);			
+		}
+		if(bottom != null){
+			this.bottom.drawMe(g);
 		}
 		System.out.println("paintComponent");
 		
@@ -31,7 +36,7 @@ public class Panel extends JPanel {
 		public void run() {
 			// TODO Auto-generated method stub
 			while(true){
-				display(blocks);
+				display(blocks,bottom);
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
@@ -42,8 +47,12 @@ public class Panel extends JPanel {
 		}				
 	}
 	
-	public void refresh(Blocks blocks){
+	public void refresh(){
 		new Thread(new PanelDrive()).start();
+	}
+	
+	public void addBlocks(Blocks blocks){
+		this.blocks = blocks;
 	}
 
 }

@@ -3,14 +3,15 @@ package zhihua.test;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Controller extends KeyAdapter implements BlockListenerInterface {
+public class Controller extends KeyAdapter  {
 	private Blocks blocks;
 	private Panel panel;
-		
-	public Controller(Blocks blocks, Panel panel) {
-		super();
-		this.blocks = blocks;
+	private Bottom bottom;
+	
+	public Controller( Panel panel, Bottom bottom) {
+		super();		
 		this.panel = panel;
+		this.bottom = bottom;
 	}
 	
 	@Override
@@ -31,20 +32,18 @@ public class Controller extends KeyAdapter implements BlockListenerInterface {
 			break;
 		}
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		switch(e.getKeyCode()){		
-		case KeyEvent.VK_DOWN:
-			blocks.speedDown();
-			break;
-		}
-	}
-
-	@Override
-	public void blockMoved() {
-		// TODO Auto-generated method stub
-		panel.refresh(blocks);
-	}
+	 public void newBlocks(){
+		
+		this.blocks = new Blocks();
+		bottom.addBlocks(blocks);
+		panel.addBlocks(blocks);		
+		blocks.addBottom(bottom);
+		blocks.start();
+		
+	 }
+	 
+	 public void blocksStart(){		
+		 panel.display(blocks,bottom);
+		 
+	 }
 }
