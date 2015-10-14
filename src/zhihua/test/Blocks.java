@@ -47,13 +47,13 @@ public class Blocks{
 	}
 	
 	public void changePosition(){
-		isHit();	
+//		isHit();	
+		bottom.isBlockHitBottom();
 		System.out.println("changePosition");
 	}
 	
-	public void isHit(){		
-		bottom.isBlockHitBottom();
-	}
+//	public void isHit(){		
+//	}
 	
 	private class BlocksDrive implements Runnable{
 		@Override

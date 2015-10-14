@@ -16,14 +16,16 @@ public class Bottom {
     	}
     }
     public void isInLine(){
-    	for(int y=20; y>= 0; y--){
+    	for(int y=20; y>= 0; y--,flag = true){    		
     		for(int x=0 ; x<11 ;x++){
     			if(arr[x][y]==0)
     				flag = false;    				
-    		}
+    		}    		
     	if(flag==true)
     		lineVanish(y);
+    		//flag = false;
     	}
+    	
     }
     
     public void lineVanish(int y){
@@ -34,15 +36,17 @@ public class Bottom {
     			arr[x][a] = arr[x][a-1];
     		}
     	}
+    	for(int x=0;x<11;x++)
+    		arr[x][0]=0;
     }
     
     public void isBlockHitBottom(){    	
     	System.out.println("isBlockHitBottom");    	
     	if(blocks.y == 20 || arr[blocks.x][blocks.y+1] ==1)
     	{
-    		blocks.a = false;    		
     		//blocks.bottom =this;
     		hitBottom(blocks);
+    		blocks.a = false;    		
     		isInLine();    		
     		controller.newBlocks();
     		controller.blocksStart();

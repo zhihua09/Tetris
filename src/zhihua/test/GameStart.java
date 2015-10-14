@@ -28,6 +28,7 @@ public class GameStart {
 //		bottom.addBlocks(blocks);
 		//blocks.addBlockListener(controller);
 		
+		bottom.addController(controller);
 		controller.newBlocks();
 		controller.blocksStart();
 		panel.refresh();		
