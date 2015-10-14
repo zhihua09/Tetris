@@ -9,7 +9,7 @@ public class Blocks{
 	int x = 5;
 	int y =-1;
 	boolean a = true;
-	final int MOVETIME =800;
+	final int MOVETIME =600;
 	
 	public void move(){
 		System.out.println("block move ");

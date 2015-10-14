@@ -21,9 +21,15 @@ public class Bottom {
     			if(arr[x][y]==0)
     				flag = false;    				
     		}    		
-    	if(flag==true)
-    		lineVanish(y);
-    		//flag = false;
+	    	if(flag==true){
+				try {
+					Thread.sleep(600);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		lineVanish(y);	    		
+	    	}
     	}
     	
     }
