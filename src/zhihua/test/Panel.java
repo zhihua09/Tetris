@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
-	
+	private Controller controller;
 	private Blocks blocks;
 	private Bottom bottom;
 	
@@ -51,8 +51,10 @@ public class Panel extends JPanel {
 		new Thread(new PanelDrive()).start();
 	}
 	
-	public void addBlocks(Blocks blocks){
-		this.blocks = blocks;
+	public void addController(Controller controller){
+		this.controller = controller;
 	}
-
+//	public void addBlocks(Blocks blocks){
+//		this.blocks = blocks;
+//	}
 }

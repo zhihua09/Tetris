@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Bottom {
+	private Controller controller;
     private int[][] arr = new int[11][21];
     private boolean flag= true;
     private boolean ishit = false;
     private Blocks blocks;
-    private Controller controller;
     
     {
     	for(int x=0 ; x<10 ; x++){
@@ -53,9 +53,14 @@ public class Bottom {
     		//blocks.bottom =this;
     		hitBottom(blocks);
     		blocks.a = false;    		
-    		isInLine();    		
-    		controller.newBlocks();
-    		controller.blocksStart();
+    		isInLine();
+    		if(blocks.y ==0){
+    			controller.gameover();      			
+    		}
+    		else{
+    			controller.newBlocks();
+    			controller.blocksStart();    			
+    		}
 //    		blocks = new Blocks();
 //    		blocks.addBottom(this);
 //    		blocks.start();

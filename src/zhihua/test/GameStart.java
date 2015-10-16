@@ -18,21 +18,22 @@ public class GameStart {
 		panel.setSize(11*25,21*25);
 		frame.add(panel,BorderLayout.CENTER);
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frame.setVisible(true);
 		
 		frame.addKeyListener(controller);
 		panel.addKeyListener(controller);
+		panel.addController(controller);
+		bottom.addController(controller);
+		
 //		blocks.addBottom(bottom);
 //		bottom.addBlocks(blocks);
 		//blocks.addBlockListener(controller);
 		
-		bottom.addController(controller);
 		controller.newBlocks();
 		controller.blocksStart();
 		panel.refresh();		
-		//blocks.start();
+//		blocks.start();
 		
 //		for (int i = 0; i <22; i++) {
 //			blocks.move();

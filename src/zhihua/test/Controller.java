@@ -7,37 +7,38 @@ public class Controller extends KeyAdapter  {
 	private Blocks blocks;
 	private Panel panel;
 	private Bottom bottom;
+	private boolean flag = true;
 	
-	public Controller( Panel panel, Bottom bottom) {
-		super();		
+	public Controller(Panel panel, Bottom bottom) {
+		super();
 		this.panel = panel;
 		this.bottom = bottom;
 	}
-	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_UP:
-			blocks.changePositionUP();
-			break;
-		case KeyEvent.VK_LEFT:
-			blocks.changePositionL();
-			break;
-		case KeyEvent.VK_RIGHT:
-			blocks.changePositionR();
-			break;
-		case KeyEvent.VK_DOWN:
-			blocks.speedUp();
-			break;
+		if(flag == true){
+			switch(e.getKeyCode()){
+			case KeyEvent.VK_UP:
+				blocks.changePositionUP();
+				break;
+			case KeyEvent.VK_LEFT:
+				blocks.changePositionL();
+				break;
+			case KeyEvent.VK_RIGHT:
+				blocks.changePositionR();
+				break;
+			case KeyEvent.VK_DOWN:
+				blocks.speedUp();
+				break;
+			}			
 		}
 	}
 	 public void newBlocks(){
 		
-		this.blocks = new Blocks();
+		blocks = new Blocks();
 		bottom.addBlocks(blocks);
-		panel.addBlocks(blocks);		
-		blocks.addBottom(bottom);
+		blocks.addController(this);
 		blocks.start();
 		
 	 }
@@ -46,4 +47,13 @@ public class Controller extends KeyAdapter  {
 		 panel.display(blocks,bottom);
 		 
 	 }
+	public void isBlockHitBottom() {
+		// TODO Auto-generated method stub
+		bottom.isBlockHitBottom();
+	}
+	public void gameover() {
+		// TODO Auto-generated method stub
+		flag = false;
+		System.out.println("game over");
+	}
 }
