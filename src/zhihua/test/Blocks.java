@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Blocks{
-	//private Controller controller;
-	Bottom bottom;
+	private Controller controller;
+	//private Bottom bottom;
 	int x = 5;
 	int y =-1;
 	boolean a = true;
@@ -19,7 +19,8 @@ public class Blocks{
 		
 	public void changePositionR(){
 		System.out.println("change positionR");		
-		x++;
+		if(x<10)
+			x++;
 		changePosition();
 	}
 	public void changePositionUP(){
@@ -29,13 +30,15 @@ public class Blocks{
 	}
 	public void changePositionL(){
 		System.out.println("change positionL");
-		x--;
+		if(x>0)
+			x--;
 		changePosition();
 	}
 	
 	public void speedUp(){
 		System.out.println("speed up");
-		y++;
+		if(y<21)
+			y++;
 		changePosition();
 	}
 	
@@ -48,7 +51,7 @@ public class Blocks{
 	
 	public void changePosition(){
 //		isHit();	
-		bottom.isBlockHitBottom();
+		controller.isBlockHitBottom();
 		System.out.println("changePosition");
 	}
 	
@@ -76,10 +79,10 @@ public class Blocks{
 		new Thread(new BlocksDrive()).start();
 	}
 	
-	public void addBottom(Bottom bottom){
-		this.bottom = bottom;
-	}
-//	public void addBlockListener(Controller controller){
-//		this.controller = controller;
+//	public void addBottom(Bottom bottom){
+//		this.bottom = bottom;
 //	}
+	public void addController(Controller controller){
+		this.controller = controller;
+	}
 }
