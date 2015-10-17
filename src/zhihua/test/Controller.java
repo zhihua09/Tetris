@@ -1,5 +1,6 @@
 package zhihua.test;
 
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -8,6 +9,9 @@ public class Controller extends KeyAdapter  {
 	private Panel panel;
 	private Bottom bottom;
 	private boolean flag = true;
+	private boolean ishit = false;
+	private boolean isgameover = false;
+	private boolean b;
 	
 	public Controller(Panel panel, Bottom bottom) {
 		super();
@@ -23,10 +27,26 @@ public class Controller extends KeyAdapter  {
 				blocks.changePositionUP();
 				break;
 			case KeyEvent.VK_LEFT:
-				blocks.changePositionL();
+				b =true;
+				for(Point p : blocks.body){
+					if(p.x > 0 && bottom.arr[p.x-1][p.y] ==1){
+						b = false;
+						break;
+					}
+				}
+				if(b)
+					blocks.changePositionL();
 				break;
 			case KeyEvent.VK_RIGHT:
-				blocks.changePositionR();
+				b =true;
+				for(Point p : blocks.body){
+					if(p.x < Global.WIDTH && bottom.arr[p.x+1][p.y] ==1){
+						b = false;
+						break;
+					}
+				}
+				if(b)
+					blocks.changePositionR();
 				break;
 			case KeyEvent.VK_DOWN:
 				blocks.speedUp();
@@ -34,24 +54,47 @@ public class Controller extends KeyAdapter  {
 			}			
 		}
 	}
-	 public void newBlocks(){
-		
-		blocks = new Blocks();
-		bottom.addBlocks(blocks);
+	
+	 public void newBlocks(){		
+		blocks = new Blocks();		
 		blocks.addController(this);
-		blocks.start();
-		
+		panel.addBlocks(blocks);
+		panel.addBottom(bottom);
+		blocks.start();		
 	 }
 	 
-	 public void blocksStart(){		
-		 panel.display(blocks,bottom);
-		 
-	 }
+//	 public void blocksStart(){		
+//		 panel.display(blocks,bottom);
+//		 
+//	 }
 	public void isBlockHitBottom() {
 		// TODO Auto-generated method stub
-		bottom.isBlockHitBottom();
+		ishit = false;
+		for(Point p : blocks.body){
+			if(p.y >= 0){				
+				if(p.y ==20 || bottom.arr[p.x][p.y+1] == 1){
+				blocks.a = false;
+				ishit = true;
+				break;
+				}
+			}
+		}
+		if(ishit){
+			bottom.hitBottom(blocks);
+			bottom.isInLine();			
+			for(Point p : blocks.body){
+				if(p.y == 0){
+					gameOver();
+					isgameover = true;
+				}					
+			}
+			if(isgameover == false){				
+				newBlocks();
+			}
+		}
+		System.out.println("is blocks hit bottom ?");
 	}
-	public void gameover() {
+	public void gameOver() {
 		// TODO Auto-generated method stub
 		flag = false;
 		System.out.println("game over");
