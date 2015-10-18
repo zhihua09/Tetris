@@ -6,14 +6,14 @@ import java.awt.Point;
 
 public class Bottom {
 //	private Controller controller;
-    public int[][] arr = new int[12][21];
+    public int[][] arr = new int[Global.WIDTH+1][Global.HEIGTH+1];
     private boolean inLine= true;
-    
-    {
-    	for(int x=0 ; x<6 ; x++){
-    		arr[x][20] = 1;
-    	}
-    }
+//    
+//    {
+//    	for(int x=0 ; x<6 ; x++){
+//    		arr[x][20] = 1;
+//    	}
+//    }
     
     public void hitBottom(Blocks blocks){
     	for(Point p : blocks.body){    		
@@ -22,10 +22,12 @@ public class Bottom {
     }
     
     public void isInLine(){
-    	for(int y=Global.HEIGTH; y>= 0; y--,inLine = true){    		
-    		for(int x=0 ; x<11 ;x++){
-    			if(arr[x][y]==0)
-    				inLine = false;    				
+    	for(int y= 0; y < Global.HEIGTH+1; y++){    		
+    		for(int x=0 ; x< Global.WIDTH+1 ;x++){
+    			if(arr[x][y]==0){
+    				inLine = false;
+    				break;    				
+    			}
     		}    		
 	    	if(inLine==true){
 				try {
@@ -34,8 +36,9 @@ public class Bottom {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	    		lineVanish(y);	    		
+	    		lineVanish(y);	
 	    	}
+	    	inLine = true;
     	}    	
     }
     

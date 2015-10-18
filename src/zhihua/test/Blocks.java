@@ -3,25 +3,83 @@ package zhihua.test;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Blocks{
 	private Controller controller;
-	public LinkedList<Point> body = new LinkedList<Point>();
+	public ArrayList<Point> body = new ArrayList<Point>();
 	boolean a = true;
 	private boolean b ;
-	final int MOVETIME =600;	
+	final int MOVETIME =600;
+	public boolean isTransfrom ;
 	
 	public Blocks() {
-		init();
+		isTransfrom = true;
+//		init2();
+		double x = Math.random();
+		if(x>=0 && x<0.19)
+			init1();
+		else if(x>=0.2 && x< 0.39)
+			init2();
+		else if(x >= 0.4 && x<0.59)
+			init3();
+		else if(x >= 0.6 && x< 0.69)
+			init4();
+		else if(x>=0.7 && x< 0.79)
+			init5();
+		else if(x>= 0.8 && x< 0.89)
+			init6();
+		else init7();
 	}
-
-	public void init(){
+	
+	public void init1(){
+		isTransfrom = false;				
 		for(int x=Global.WIDTH/2;x < Global.WIDTH/2+2 ; x++){
 			body.add(new Point(x,-2));
-			body.add(new Point(x,-3));
+			body.add(new Point(x,-3));			
 		}
 	}
+	
+	 public void init2(){
+		 for(int x= Global.WIDTH/2-1 ; x < Global.WIDTH/2 + 3 ; x++){
+			 body.add(new Point(x,-2));
+		 }
+	 }
+	 
+	 public void init3(){
+		 for(int x = Global.WIDTH/2 - 1; x< Global.WIDTH/2 +2 ; x++){
+			 body.add(new Point(x,-3));
+			 body.add(new Point(Global.WIDTH/2,-2));			 
+		 }
+	 }
+	 
+	 public void init4(){
+		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
+			 body.add(new Point(x,-3));
+			 body.add(new Point(Global.WIDTH/2 +1,-2));
+		 }
+	 }
+	 
+	 public void init5(){
+		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
+			 body.add(new Point(x,-3));
+			 body.add(new Point(Global.WIDTH/2 -1,-2));
+		 }
+	 }
+	 
+	 public void init6(){
+		 body.add(new Point(Global.WIDTH/2-1,-3));
+		body.add(new Point(Global.WIDTH/2,-3));
+		body.add(new Point(Global.WIDTH/2 ,-2));
+		body.add(new Point(Global.WIDTH/2 + 1 ,-2));
+	 }
+	 
+	 public void init7(){
+		 body.add(new Point(Global.WIDTH/2 + 1,-3));
+		 body.add(new Point(Global.WIDTH/2 ,-3));
+		 body.add(new Point(Global.WIDTH/2 -1 ,-2));
+		 body.add(new Point(Global.WIDTH/2 ,-2));
+	 }
 	
 	public void move(){
 		System.out.println("block move ");
@@ -32,8 +90,30 @@ public class Blocks{
 	}
 		
 	public void changePositionUP(){
-		System.out.println("change positionUP");
-		positionChanged();
+		ArrayList<Point> body_bk = new ArrayList<Point>();
+		for(Point p : body){
+			body_bk.add(p);
+		}
+		Point o = body.get(1);
+		boolean flag = false;
+		for(Point p: body){
+			int distance_y = o.x - p.x;
+			int distance_x = o.y - p.y;
+			int x = o.x - distance_x;
+			int y = o.y + distance_y;
+			if(controller.isBottomOrWall(x,y)){
+				flag = true;
+				break;
+			}			
+			p.x = x;
+			p.y = y;
+		}
+		if(flag)
+			body = body_bk;
+		else{			
+			System.out.println("change positionUP");
+			positionChanged();
+		}
 	}
 	
 	public void changePositionR(){

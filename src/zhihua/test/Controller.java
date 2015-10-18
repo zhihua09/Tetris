@@ -12,7 +12,7 @@ public class Controller extends KeyAdapter  {
 	private boolean ishit = false;
 	private boolean isgameover = false;
 	private boolean b;
-	
+		
 	public Controller(Panel panel, Bottom bottom) {
 		super();
 		this.panel = panel;
@@ -23,15 +23,18 @@ public class Controller extends KeyAdapter  {
 		// TODO Auto-generated method stub
 		if(flag == true){
 			switch(e.getKeyCode()){
-			case KeyEvent.VK_UP:
-				blocks.changePositionUP();
+			case KeyEvent.VK_UP:				
+				if(blocks.isTransfrom)
+					blocks.changePositionUP();				
 				break;
 			case KeyEvent.VK_LEFT:
 				b =true;
 				for(Point p : blocks.body){
-					if(p.x > 0 && bottom.arr[p.x-1][p.y] ==1){
-						b = false;
-						break;
+					if(p.x > 0 && p.y >= 0){						
+						if(p.x > 0 && bottom.arr[p.x-1][p.y] ==1){
+							b = false;
+							break;
+						}
 					}
 				}
 				if(b)
@@ -40,9 +43,11 @@ public class Controller extends KeyAdapter  {
 			case KeyEvent.VK_RIGHT:
 				b =true;
 				for(Point p : blocks.body){
-					if(p.x < Global.WIDTH && bottom.arr[p.x+1][p.y] ==1){
-						b = false;
-						break;
+					if(p.y >= 0){
+						if(p.x < Global.WIDTH && bottom.arr[p.x+1][p.y] ==1){
+							b = false;
+							break;
+						}						
 					}
 				}
 				if(b)
@@ -81,6 +86,7 @@ public class Controller extends KeyAdapter  {
 		}
 		if(ishit){
 			bottom.hitBottom(blocks);
+			blocks.body.removeAll(blocks.body);
 			bottom.isInLine();			
 			for(Point p : blocks.body){
 				if(p.y == 0){
@@ -98,5 +104,13 @@ public class Controller extends KeyAdapter  {
 		// TODO Auto-generated method stub
 		flag = false;
 		System.out.println("game over");
+	}
+	public boolean isBottomOrWall(int x, int y) {
+		// TODO Auto-generated method stub
+		if( x<0 || x>11 || y > 20 )
+			return true;
+		if(y>=0 && bottom.arr[x][y] == 1)
+			return true;
+		return false;
 	}
 }
