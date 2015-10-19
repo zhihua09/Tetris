@@ -18,18 +18,18 @@ public class Blocks{
 //		init2();
 		double x = Math.random();
 		if(x>=0 && x<0.19)
-			init1();
+			init7();
 		else if(x>=0.2 && x< 0.39)
-			init2();
+			init5();
 		else if(x >= 0.4 && x<0.59)
 			init3();
 		else if(x >= 0.6 && x< 0.69)
 			init4();
 		else if(x>=0.7 && x< 0.79)
-			init5();
+			init1();
 		else if(x>= 0.8 && x< 0.89)
 			init6();
-		else init7();
+		else init2();
 	}
 	
 	public void init1(){
@@ -49,22 +49,22 @@ public class Blocks{
 	 public void init3(){
 		 for(int x = Global.WIDTH/2 - 1; x< Global.WIDTH/2 +2 ; x++){
 			 body.add(new Point(x,-3));
-			 body.add(new Point(Global.WIDTH/2,-2));			 
 		 }
+		 body.add(new Point(Global.WIDTH/2,-2));			 
 	 }
 	 
 	 public void init4(){
 		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
 			 body.add(new Point(x,-3));
-			 body.add(new Point(Global.WIDTH/2 +1,-2));
 		 }
+		 body.add(new Point(Global.WIDTH/2 +1,-2));
 	 }
 	 
 	 public void init5(){
 		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
 			 body.add(new Point(x,-3));
-			 body.add(new Point(Global.WIDTH/2 -1,-2));
 		 }
+		 body.add(new Point(Global.WIDTH/2 -1,-2));
 	 }
 	 
 	 public void init6(){
@@ -89,28 +89,29 @@ public class Blocks{
 		positionChanged();
 	}
 		
-	public void changePositionUP(){
+	public void changePositionUP() {
 		ArrayList<Point> body_bk = new ArrayList<Point>();
-		for(Point p : body){
-			body_bk.add(p);
+		synchronized(this){			
+			for(Point p: body){				
+				body_bk.add(new Point(p.x,p.y));
+			}
 		}
-		Point o = body.get(1);
-		boolean flag = false;
-		for(Point p: body){
+		Point o = body_bk.get(1);
+		boolean isBottomOrWall = false;
+		for(Point p: body_bk){
 			int distance_y = o.x - p.x;
 			int distance_x = o.y - p.y;
-			int x = o.x - distance_x;
-			int y = o.y + distance_y;
+			int x = o.x + distance_x;
+			int y = o.y - distance_y;
 			if(controller.isBottomOrWall(x,y)){
-				flag = true;
+				isBottomOrWall = true;				
 				break;
-			}			
+			}							
 			p.x = x;
-			p.y = y;
+			p.y = y;			
 		}
-		if(flag)
+		if(isBottomOrWall==false){			
 			body = body_bk;
-		else{			
 			System.out.println("change positionUP");
 			positionChanged();
 		}
@@ -186,7 +187,9 @@ public class Blocks{
 		public void run() {
 			// TODO Auto-generated method stub
 			while(a){
-				move();								
+				synchronized(this){					
+					move();								
+				}
 				try {
 					Thread.sleep(MOVETIME);
 				} catch (InterruptedException e) {

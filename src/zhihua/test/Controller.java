@@ -76,8 +76,8 @@ public class Controller extends KeyAdapter  {
 		// TODO Auto-generated method stub
 		ishit = false;
 		for(Point p : blocks.body){
-			if(p.y >= 0){				
-				if(p.y ==20 || bottom.arr[p.x][p.y+1] == 1){
+			if(p.y >= 0 && p.x >=0){				
+				if(p.y >=Global.HEIGTH || bottom.arr[p.x][p.y+1] == 1){
 				blocks.a = false;
 				ishit = true;
 				break;
@@ -107,10 +107,10 @@ public class Controller extends KeyAdapter  {
 	}
 	public boolean isBottomOrWall(int x, int y) {
 		// TODO Auto-generated method stub
-		if( x<0 || x>11 || y > 20 )
+		if( x<0 || x> Global.WIDTH || y > Global.HEIGTH )
 			return true;
 		if(y>=0 && bottom.arr[x][y] == 1)
 			return true;
-		return false;
+		return false;	
 	}
 }
