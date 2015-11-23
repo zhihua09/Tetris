@@ -1,13 +1,8 @@
 package zhihua.test;
 
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JFrame;
 
 public class Controller extends KeyAdapter  {
 	private Blocks blocks;
@@ -17,7 +12,7 @@ public class Controller extends KeyAdapter  {
 	private boolean isgameover = false;
 	private boolean b;
 		
-	public Controller(Panel panel,JFrame frame) {
+	public Controller(Panel panel) {
 		this.panel = panel;
 		this.bottom = new Bottom();
 	}
@@ -77,7 +72,7 @@ public class Controller extends KeyAdapter  {
 		for(Point p : blocks.body){
 			if(p.y >= 0 && p.x >=0){				
 				if(p.y >=Global.HEIGTH || bottom.arr[p.x][p.y+1] == 1){
-				blocks.a = false;
+				blocks.isGameOver = true;
 				ishit = true;
 				break;
 				}
@@ -88,8 +83,6 @@ public class Controller extends KeyAdapter  {
 			bottom.isInLine();
 			for(Point p:blocks.body){
 				if(p.y==0){
-					gameOver();
-					blocks.a=false;
 					isgameover = true;	
 					break;
 				}			
@@ -100,11 +93,6 @@ public class Controller extends KeyAdapter  {
 			}
 		}
 //		System.out.println("is blocks hit bottom ?");
-	}
-	
-	public void gameOver() {
-		// TODO Auto-generated method stub
-		System.out.println("game over");
 	}
 	
 	public boolean isBottomOrWall(int x, int y) {

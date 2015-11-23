@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
-//	private Controller controller;
 	private Blocks blocks;
 	private Bottom bottom;
 	
@@ -18,7 +17,7 @@ public class Panel extends JPanel {
 	
 	protected  void paintComponent(Graphics g){
 		g.setColor(Color.GRAY);
-		g.fillRect(0, 0,(Global.WIDTH+1)*Global.CELL_SIZE, (Global.HEIGTH+1)*Global.CELL_SIZE);		
+		g.fillRect(0, 0,(Global.WIDTH+1)*Global.CELL_SIZE, (Global.HEIGTH+1)*Global.CELL_SIZE);	
 		
 		if(blocks != null)
 			this.blocks.drawMe(g);		
@@ -48,9 +47,6 @@ public class Panel extends JPanel {
 		new Thread(new PanelDrive()).start();
 	}
 	
-//	public void addController(Controller controller){
-//		this.controller = controller;
-//	}
 	public void addBlocks(Blocks blocks){
 		this.blocks = blocks;
 	}

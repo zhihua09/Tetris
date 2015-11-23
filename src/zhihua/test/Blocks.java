@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Blocks{
 	private Controller controller;
 	public ArrayList<Point> body = new ArrayList<Point>();
-	boolean a = true;
+	boolean isGameOver = false;
 	private boolean b ;
 	final int MOVETIME =600;
 	public boolean isTransfrom ;
@@ -32,7 +32,7 @@ public class Blocks{
 		else init2();
 	}
 	
-	public void init1(){
+	public void init1(){//正方形
 		isTransfrom = false;				
 		for(int x=Global.WIDTH/2;x < Global.WIDTH/2+2 ; x++){
 			body.add(new Point(x,-2));
@@ -40,7 +40,7 @@ public class Blocks{
 		}
 	}
 	
-	 public void init2(){
+	 public void init2(){//长条形
 		 for(int x= Global.WIDTH/2-1 ; x < Global.WIDTH/2 + 3 ; x++){
 			 body.add(new Point(x,-2));
 		 }
@@ -186,7 +186,7 @@ public class Blocks{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			while(a){
+			while(!isGameOver){
 					move();								
 				try {
 					Thread.sleep(MOVETIME);
