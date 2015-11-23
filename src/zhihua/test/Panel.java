@@ -6,9 +6,6 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Panel extends JPanel {
-/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 //	private Controller controller;
 	private Blocks blocks;
@@ -23,12 +20,10 @@ public class Panel extends JPanel {
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0,(Global.WIDTH+1)*Global.CELL_SIZE, (Global.HEIGTH+1)*Global.CELL_SIZE);		
 		
-		if(blocks != null){
-			this.blocks.drawMe(g);			
-		}
-		if(bottom != null){
-			this.bottom.drawMe(g);
-		}
+		if(blocks != null)
+			this.blocks.drawMe(g);		
+		if(bottom != null)
+			this.bottom.drawMe(g);		
 		System.out.println("paintComponent");
 		
 	}
