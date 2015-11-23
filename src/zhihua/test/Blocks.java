@@ -82,7 +82,7 @@ public class Blocks{
 	 }
 	
 	public void move(){
-		System.out.println("block move ");
+//		System.out.println("block move ");
 		for(Point p : body){
 			p.y++;
 		}		
@@ -170,12 +170,12 @@ public class Blocks{
 	
 	public void positionChanged(){
 		controller.isBlockHitBottom();
-		System.out.println("Positionchanged");
+//		System.out.println("Positionchanged");
 	}
 	
 	public void drawMe(Graphics g) {
 		// TODO Auto-generated method stub
-		System.out.println("drawMe blocks");
+//		System.out.println("drawMe blocks");
 		g.setColor(Color.blue);
 		for(Point p : body){
 			g.fill3DRect(p.x*Global.CELL_SIZE, p.y*Global.CELL_SIZE ,Global.CELL_SIZE,Global.CELL_SIZE, true);
@@ -187,9 +187,7 @@ public class Blocks{
 		public void run() {
 			// TODO Auto-generated method stub
 			while(a){
-				synchronized(this){					
 					move();								
-				}
 				try {
 					Thread.sleep(MOVETIME);
 				} catch (InterruptedException e) {

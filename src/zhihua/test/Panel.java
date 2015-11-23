@@ -13,7 +13,7 @@ public class Panel extends JPanel {
 	
 	public void display(Blocks blocks,Bottom bottom){
 		this.repaint();
-		System.out.println("display panel");
+//		System.out.println("display panel");
 	}
 	
 	protected  void paintComponent(Graphics g){
@@ -24,7 +24,7 @@ public class Panel extends JPanel {
 			this.blocks.drawMe(g);		
 		if(bottom != null)
 			this.bottom.drawMe(g);		
-		System.out.println("paintComponent");
+//		System.out.println("paintComponent");
 		
 	}
 	

@@ -13,17 +13,13 @@ public class Controller extends KeyAdapter  {
 	private Blocks blocks;
 	private Panel panel;
 	private Bottom bottom;
-	private JFrame frame;
-	private boolean flag = true;
 	private boolean ishit = false;
 	private boolean isgameover = false;
 	private boolean b;
 		
-	public Controller(Panel panel, Bottom bottom,JFrame frame) {
-		super();
+	public Controller(Panel panel,JFrame frame) {
 		this.panel = panel;
-		this.bottom = bottom;
-		this.frame = frame;
+		this.bottom = new Bottom();
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -65,22 +61,16 @@ public class Controller extends KeyAdapter  {
 		}	
 	}
 	
-	 private void reStart() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void newBlocks(){		
-		blocks = new Blocks();		
+	 public void newBlocks(){		
+		blocks = new Blocks();	
+		System.out.println("new blocks");
 		blocks.addController(this);
 		panel.addBlocks(blocks);
 		panel.addBottom(bottom);
 		blocks.start();		
 	 }
 	 
-//	 public void blocksStart(){		
-//		 panel.display(blocks,bottom);
-//		 
-//	 }
+
 	public void isBlockHitBottom() {
 		// TODO Auto-generated method stub
 		ishit = false;
@@ -95,50 +85,28 @@ public class Controller extends KeyAdapter  {
 		}
 		if(ishit){
 			bottom.hitBottom(blocks);
-			blocks.body.removeAll(blocks.body);
 			bottom.isInLine();
-			if(bottom.arr[Global.WIDTH/2][10]==1){
-				gameOver();
-				isgameover = true;				
-			}			
+			for(Point p:blocks.body){
+				if(p.y==0){
+					gameOver();
+					blocks.a=false;
+					isgameover = true;	
+					break;
+				}			
+			}
+			blocks.body.removeAll(blocks.body);
 			if(isgameover == false){				
 				newBlocks();
 			}
 		}
-		System.out.println("is blocks hit bottom ?");
+//		System.out.println("is blocks hit bottom ?");
 	}
+	
 	public void gameOver() {
 		// TODO Auto-generated method stub
-		newDialog();
 		System.out.println("game over");
 	}
-	private void newDialog() {
-		// TODO Auto-generated method stub
-		Dialog d = new Dialog(frame,"¶íÂÞË¹·½¿é-Game Over",true);
-		Button b1 = new Button("(Q)uit");
-		Button b2 = new Button("(R)eStart");		
-		d.add(b1);
-		d.add(b2);
-		d.setSize(400, 100);
-		d.setLocation(500, 300);
-		d.setLayout(new FlowLayout());
-		d.setVisible(true);
-		d.addKeyListener(new KeyAdapter(){
-			@Override
-			public void keyPressed(KeyEvent e1) {
-				// TODO Auto-generated method stub
-				switch(e1.getKeyCode()){
-				case KeyEvent.VK_Q:
-					System.exit(0);
-					break;
-				case KeyEvent.VK_R:
-					reStart();
-					break;
-				}
-			}			
-		});
 	
-	}
 	public boolean isBottomOrWall(int x, int y) {
 		// TODO Auto-generated method stub
 		if( x<0 || x> Global.WIDTH || y > Global.HEIGTH )

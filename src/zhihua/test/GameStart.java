@@ -12,10 +12,9 @@ public class GameStart {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Bottom bottom = new Bottom();
 		Panel panel = new Panel();		
 		JFrame frame = new JFrame("¶íÂÞË¹·½¿é");
-		Controller controller = new Controller(panel,bottom,frame);
+		Controller controller = new Controller(panel,frame);
 		
 		frame.setSize((Global.WIDTH+1)*Global.CELL_SIZE+15, (Global.HEIGTH+1)*Global.CELL_SIZE+35);
 		frame.setLocation(540, 50);
@@ -27,12 +26,10 @@ public class GameStart {
 		
 				
 		frame.addKeyListener(controller);
-		panel.addKeyListener(controller);
+//		panel.addKeyListener(controller);
 		
 		controller.newBlocks();
 		panel.refresh();		
-
-		System.out.println("end");
 	}
 
 }
