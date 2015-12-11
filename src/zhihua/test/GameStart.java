@@ -1,10 +1,6 @@
 package zhihua.test;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Label;
 
 import javax.swing.JFrame;
 
@@ -14,7 +10,7 @@ public class GameStart {
 		// TODO Auto-generated method stub
 		Panel panel = new Panel();		
 		JFrame frame = new JFrame("¶íÂÞË¹·½¿é");
-		Controller controller = new Controller(panel);
+		Controller controller = new Controller(frame,panel);
 		
 		frame.setSize((Global.WIDTH+1)*Global.CELL_SIZE+15, (Global.HEIGTH+1)*Global.CELL_SIZE+35);
 		frame.setLocation(540, 50);
@@ -23,12 +19,8 @@ public class GameStart {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		frame.setVisible(true);	
-		
 				
-		frame.addKeyListener(controller);
-		
-		controller.newBlocks();
-		panel.refresh();		
+		controller.gameStart();
 	}
 
 }

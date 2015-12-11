@@ -8,11 +8,13 @@ import java.util.ArrayList;
 public class Blocks{
 	private Controller controller;
 	public ArrayList<Point> body = new ArrayList<Point>();
-	boolean isGameOver = false;
-	private boolean b ;
-	final int MOVETIME =600;
-	public boolean isTransfrom ;
+	boolean canBlocksDrive = true;//积木是否下落
+	final int MOVETIME =600;//下落速度
+	public boolean isTransfrom ;//积木是否可以旋转
 	
+	/**
+	 * 随机生成一种积木
+	 */
 	public Blocks() {
 		isTransfrom = true;
 //		init2();
@@ -32,7 +34,10 @@ public class Blocks{
 		else init2();
 	}
 	
-	public void init1(){//正方形
+	/**
+	 * 正方形积木初始化
+	 */
+	public void init1(){
 		isTransfrom = false;				
 		for(int x=Global.WIDTH/2;x < Global.WIDTH/2+2 ; x++){
 			body.add(new Point(x,-2));
@@ -40,47 +45,68 @@ public class Blocks{
 		}
 	}
 	
-	 public void init2(){//长条形
+	/**
+	 *长条形积木初始化  
+	 */
+	public void init2(){
 		 for(int x= Global.WIDTH/2-1 ; x < Global.WIDTH/2 + 3 ; x++){
 			 body.add(new Point(x,-2));
 		 }
 	 }
 	 
-	 public void init3(){
+	/**
+	 *T字形积木初始化  
+	 */ 
+	public void init3(){
 		 for(int x = Global.WIDTH/2 - 1; x< Global.WIDTH/2 +2 ; x++){
 			 body.add(new Point(x,-3));
 		 }
 		 body.add(new Point(Global.WIDTH/2,-2));			 
 	 }
 	 
-	 public void init4(){
+	/**
+	 *右L形积木初始化  
+	 */  
+	public void init4(){//
 		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
 			 body.add(new Point(x,-3));
 		 }
 		 body.add(new Point(Global.WIDTH/2 +1,-2));
 	 }
 	 
-	 public void init5(){
+	/**
+	 *左L形积木初始化  
+	 */  
+	public void init5(){//
 		 for(int x = Global.WIDTH/2 -1 ; x< Global.WIDTH/2 +2 ;x++){
 			 body.add(new Point(x,-3));
 		 }
 		 body.add(new Point(Global.WIDTH/2 -1,-2));
 	 }
 	 
-	 public void init6(){
+	/**
+	 *左Z形积木初始化  
+	 */  
+	public void init6(){//
 		 body.add(new Point(Global.WIDTH/2-1,-3));
 		body.add(new Point(Global.WIDTH/2,-3));
 		body.add(new Point(Global.WIDTH/2 ,-2));
 		body.add(new Point(Global.WIDTH/2 + 1 ,-2));
 	 }
 	 
-	 public void init7(){
+	/**
+	 *右Z形积木初始化  
+	 */   
+	public void init7(){//
 		 body.add(new Point(Global.WIDTH/2 + 1,-3));
 		 body.add(new Point(Global.WIDTH/2 ,-3));
 		 body.add(new Point(Global.WIDTH/2 -1 ,-2));
 		 body.add(new Point(Global.WIDTH/2 ,-2));
 	 }
 	
+	/**
+	 * 积木下落，并生成积木位置改变事件
+	 */
 	public void move(){
 //		System.out.println("block move ");
 		for(Point p : body){
@@ -89,12 +115,13 @@ public class Blocks{
 		positionChanged();
 	}
 		
+	/**
+	 * 旋转积木
+	 */
 	public void changePositionUP() {
 		ArrayList<Point> body_bk = new ArrayList<Point>();
-		synchronized(this){			
-			for(Point p: body){				
-				body_bk.add(new Point(p.x,p.y));
-			}
+		for(Point p: body){				
+			body_bk.add(new Point(p.x,p.y));
 		}
 		Point o = body_bk.get(1);
 		boolean isBottomOrWall = false;
@@ -103,7 +130,7 @@ public class Blocks{
 			int distance_x = o.y - p.y;
 			int x = o.x + distance_x;
 			int y = o.y - distance_y;
-			if(controller.isBottomOrWall(x,y)){
+			if(controller.isBottomOrWall(x,y)){//判断是否可以旋转
 				isBottomOrWall = true;				
 				break;
 			}							
@@ -117,62 +144,51 @@ public class Blocks{
 		}
 	}
 	
+	/**
+	 * 右移积木
+	 */
 	public void changePositionR(){
 		System.out.println("change positionR");		
-		b = true;
 		for(Point p : body){
-			if(p.x >= Global.WIDTH){
-				b = false;
-				break;
-			}
-		}
-		if(b){
-			for(Point p : body){
-				p.x++;
-			}			
-			positionChanged();			
-		}
+			p.x++;
+		}			
+		positionChanged();			
 	}
 	
+	/**
+	 * 左移积木
+	 */
 	public void changePositionL(){
 		System.out.println("change positionL");
-		b = true;
 		for(Point p : body){
-			if(p.x <= 0){
-				b = false;
-				break;				
-			}
+			p.x--;
 		}
-		if(b){
-			for(Point p : body){
-				p.x--;
-			}
-			positionChanged();
-		}			
+		positionChanged();
 	}
 	
+	/**
+	 * 下移积木
+	 */
 	public void speedUp(){
-		System.out.println("speed up");
-		b = true;
-		for(Point p : body){
-			if(p.y >=Global.HEIGTH){
-				b=false;
-				break;
-			}
-		}
-		if(b){
-			for(Point p : body){
-				p.y++;
-			}
-			positionChanged();
-		}			
-	}
+		 System.out.println("speed up");
+		 for(Point p : body){
+			p.y++;
+		 }
+		 positionChanged();
+	 }
 	
+	/**
+	 * 积木位置发生变化，去检查积木是否触及底部
+	 */
 	public void positionChanged(){
 		controller.isBlockHitBottom();
 //		System.out.println("Positionchanged");
 	}
 	
+	/**
+	 * 在画布上画出自己
+	 * @param g
+	 */
 	public void drawMe(Graphics g) {
 		// TODO Auto-generated method stub
 //		System.out.println("drawMe blocks");
@@ -182,11 +198,12 @@ public class Blocks{
 		}
 	}	
 	
-	private class BlocksDrive implements Runnable{
+	
+	private class BlocksDrive implements Runnable{//积木持续下落
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			while(!isGameOver){
+		 	while(canBlocksDrive){
 					move();								
 				try {
 					Thread.sleep(MOVETIME);
@@ -198,10 +215,17 @@ public class Blocks{
 		}		
 	}
 	
+	/**
+	 *开始 积木持续下落
+	 */
 	public void start(){
 		new Thread(new BlocksDrive()).start();
 	}	
 
+	/**
+	 * 添加监听器
+	 * @param controller
+	 */
 	public void addController(Controller controller){
 		this.controller = controller;
 	}

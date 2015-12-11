@@ -16,7 +16,7 @@ public class Panel extends JPanel {
 	}
 	
 	protected  void paintComponent(Graphics g){
-		g.setColor(Color.GRAY);
+		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0,(Global.WIDTH+1)*Global.CELL_SIZE, (Global.HEIGTH+1)*Global.CELL_SIZE);	
 		
 		if(blocks != null)
